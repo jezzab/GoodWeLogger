@@ -35,10 +35,10 @@
 #define TIMEZONE 2
 
 //rs485 receive pin
-#define RS485_RX D1
+#define RS485_RX 25
 
 //rs485 transmit pin
-#define RS485_TX D2
+#define RS485_TX 26
 
 //Hostname to use on local network
 #define WIFI_HOSTNAME "GoodWeLogger"

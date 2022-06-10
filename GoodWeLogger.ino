@@ -1,8 +1,8 @@
 #include <TimeLib.h>
 #include <NTPClient.h>
-#include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
-#include <ESP8266HTTPClient.h>
+#include <WiFi.h>
+#include <ESPmDNS.h>
+#include <HTTPClient.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
 #include "GoodWeCommunicator.h"
@@ -29,7 +29,7 @@ void setup()
 {
 	//debug settings
 	auto settings = settingsManager.GetSettings();
-	//set settings from heade file
+	//set settings from header file
 	settings->mqttHostName = MQTT_HOST_NAME;
 	settings->mqttPort = MQTT_PORT;
 	settings->mqttUserName = MQTT_USER_NAME;
@@ -53,7 +53,7 @@ void setup()
 	Serial.begin(115200);
 	Serial.println("Booting");
 	WiFi.mode(WIFI_STA);
-	WiFi.hostname(settings->wifiHostname.c_str());
+	WiFi.setHostname(settings->wifiHostname.c_str());
 	WiFi.begin(settings->wifiSSID.c_str(), settings->wifiPassword.c_str());
 
 	//check wifi connection

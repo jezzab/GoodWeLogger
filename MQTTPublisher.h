@@ -1,7 +1,7 @@
 #define MQTT_SOCKET_TIMEOUT 5
 #pragma once
 #include <Arduino.h>
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 #include "SettingsManager.h"
 #include "GoodWeCommunicator.h"
 #include <vector>
@@ -35,4 +35,3 @@ public:
 	
 	void handle();
 };
-

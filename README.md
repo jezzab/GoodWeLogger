@@ -5,7 +5,8 @@ Sending information to a MQTT broker is supported, as well as uploading informat
 
 ## Requirements
   - GoodWe inverter with a RS485 connector (this software has been tested with GW3000-NS, GW3600D-NS, GW10KN-DT, but other inverters might also work)
-  - ESP8266 module (like NodeMCU or WeMos D1 mini)
+  - ESP32 module - DFRobot FireBeetle V2 was used (https://www.dfrobot.com/product-1590.html)
+  - LiPo battery to match the above board
   - RS485 converter (can be found on sites like AliExpress, search for `SCM TTL to RS485 Adapter 485 to UART Serial Port 3.3V 5V Level Converter Module`). For example the *XY-017* board is suitable  
   - Computer with Arduino IDE installed to flash the firmware
 
@@ -25,6 +26,8 @@ Sending information to a MQTT broker is supported, as well as uploading informat
 ## Connecting hardware
 The RS485 connector on the inverter is located at the bottom of the inverter, visible when you remove the original GoodWe wifi-module. It could also be hidden behind a small metal plate (for inverters without WiFi). 
 It is a 6 pin green terminal (male), the female counterpart is probably part number CTB92HE/6 (3.81mm pitch) but this hasn't been confirmed yet. You can order the female counterpart on eBay/AliExpress/Farnell or similar sites. Using female-female jumper wires that you insert directly into the connector and ESP8266 also works.
+
+The LiPo battery will keep the power to the ESP32 board overnight as the inverter loses power. If you dont use the LiPo you will have issues with MQTT and it holding the last value and not resetting.
 
 ***Above information applies to the GWxxxxD-NS range of inverters. Other models might use a different method of connecting. Consult your inverter manual.***
 
@@ -50,14 +53,14 @@ They cannot work simultaneously.**
 RS485 converter | ESP8266
 --- | ---
 GND | G / GND
-RXD | D1
-TXD | D2
+RXD | D2
+TXD | D3
 VCC | 5V / 3V3
 
 *(`D1` (receive) and `D2` (transmit) can be configured to different pins in `Settings.h`)*. It might look weird to connect `RXD` of the module to the receive pin of the ESP8266, but this is how the XY-017 RS485 converter is labeled.
 
-### Powering ESP8266 from the GoodWe inverter
-Instead of supplying power to the ESP8266 with a separate USB power adapter, it is also possible to 'steal' power from the GoodWe inverter. This can be done by tapping in to the white cable with 5 pin connector (JST-XH) that is normally connected to the original GoodWe wifi-module. **Do not use this method if you want to use MQTT!** For MQTT to show the correct values, the counters are reset to zero at midnight, which obviously won't work if the ESP8266 doesn't have power (inverter turns off when the sun is down). If you only use PVOutput you can use this method.
+### Powering ESP32 from the GoodWe inverter
+Instead of supplying power to the ESP8266 with a separate USB power adapter, it is also possible to 'steal' power from the GoodWe inverter. This can be done by tapping in to the white cable with 5 pin connector (JST-XH) that is normally connected to the original GoodWe wifi-module.
 
 Use this method at your own risk, and measure/check first before attempting this method! See [here](https://github.com/jantenhove/GoodWeLogger/issues/25) for more information. Confirmed to be working with at least GW3000-NS. 
 

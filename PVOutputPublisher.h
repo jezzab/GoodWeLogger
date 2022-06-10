@@ -1,10 +1,10 @@
 #pragma once
 #include <Arduino.h>
 #include "TimeLib.h"
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 #include "SettingsManager.h"
 #include "GoodWeCommunicator.h"
-#include "ESP8266HTTPClient.h"
+#include "HTTPClient.h"
 #include "Debug.h"
 
 #define MAX_EDAY_DIFF 100.0f
@@ -43,4 +43,3 @@ private:
 	float prevEday = 0.0f;
 	String getZeroFilled(int num);
 };
-

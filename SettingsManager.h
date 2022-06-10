@@ -1,5 +1,5 @@
 #pragma once
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 
 class SettingsManager
 {
@@ -27,8 +27,8 @@ public:
 		int wifiConnectTimeout;
 
 		//general settings
-		int RS485Rx =D1;		//default set because added later
-		int RS485Tx =D2;
+		int RS485Rx = 25;		//default set because added later
+		int RS485Tx = 26;
 		int inverterOfflineDataResetTimeout;
 		int timezone;
 
@@ -42,4 +42,3 @@ public:
 
 	Settings * GetSettings();
 };
-

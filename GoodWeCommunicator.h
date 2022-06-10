@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "SoftwareSerial52.h"
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 #include "SettingsManager.h"
 #include "TimeLib.h"
 #include "Debug.h"
