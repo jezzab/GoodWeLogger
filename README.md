@@ -1,6 +1,6 @@
-# GoodWe Solar inverter logger based on ESP8266
+# GoodWe Solar inverter logger based on ESP32
 
-This ESP8266 firmware enables you to read information from a [GoodWe](https://www.goodwe.com/?l=en-us) solar inverter through it's RS485 bus.  
+This ESP32 firmware enables you to read information from a [GoodWe](https://www.goodwe.com/?l=en-us) solar inverter through it's RS485 bus.  
 Sending information to a MQTT broker is supported, as well as uploading information to [PVOutput](https://pvoutput.org/about.html).
 
 ## Requirements
@@ -19,13 +19,13 @@ Sending information to a MQTT broker is supported, as well as uploading informat
    - [RemoteDebug (forked)](https://github.com/jantenhove/RemoteDebug)
  - Clone/download this repository
  - Rename the `Settings.example.h` to `Settings.h` and configure it to match your preferred settings
- - Compile and upload the firmware to your ESP8266 using the Arduino IDE  
+ - Compile and upload the firmware to your ESP32 using the Arduino IDE  
  
  Diagnostics information is sent over serial at 115200 baud *(wifi status, MQTT status, inverter connection status)*
 
 ## Connecting hardware
 The RS485 connector on the inverter is located at the bottom of the inverter, visible when you remove the original GoodWe wifi-module. It could also be hidden behind a small metal plate (for inverters without WiFi). 
-It is a 6 pin green terminal (male), the female counterpart is probably part number CTB92HE/6 (3.81mm pitch) but this hasn't been confirmed yet. You can order the female counterpart on eBay/AliExpress/Farnell or similar sites. Using female-female jumper wires that you insert directly into the connector and ESP8266 also works.
+It is a 6 pin green terminal (male), the female counterpart is probably part number CTB92HE/6 (3.81mm pitch) but this hasn't been confirmed yet. You can order the female counterpart on eBay/AliExpress/Farnell or similar sites. Using female-female jumper wires that you insert directly into the connector and ESP32 also works.
 
 The LiPo battery will keep the power to the ESP32 board overnight as the inverter loses power. If you dont use the LiPo you will have issues with MQTT and it holding the last value and not resetting.
 
@@ -48,19 +48,19 @@ pin 2 *(485_TX+)* | B-
 **Pay attention, RS485 will only work if you disconnect the WiFi module and restart the inverter. 
 They cannot work simultaneously.**
 
-### Connecting RS485 converter to ESP8266
+### Connecting RS485 converter to ESP32
 
-RS485 converter | ESP8266
+RS485 converter | ESP32
 --- | ---
 GND | G / GND
 RXD | D2
 TXD | D3
 VCC | 5V / 3V3
 
-*(`D1` (receive) and `D2` (transmit) can be configured to different pins in `Settings.h`)*. It might look weird to connect `RXD` of the module to the receive pin of the ESP8266, but this is how the XY-017 RS485 converter is labeled.
+*(`D1` (receive) and `D2` (transmit) can be configured to different pins in `Settings.h`)*. It might look weird to connect `RXD` of the module to the receive pin of the ESP32, but this is how the XY-017 RS485 converter is labeled.
 
 ### Powering ESP32 from the GoodWe inverter
-Instead of supplying power to the ESP8266 with a separate USB power adapter, it is also possible to 'steal' power from the GoodWe inverter. This can be done by tapping in to the white cable with 5 pin connector (JST-XH) that is normally connected to the original GoodWe wifi-module.
+Instead of supplying power to the ESP32 with a separate USB power adapter, it is also possible to 'steal' power from the GoodWe inverter. This can be done by tapping in to the white cable with 5 pin connector (JST-XH) that is normally connected to the original GoodWe wifi-module.
 
 Use this method at your own risk, and measure/check first before attempting this method! See [here](https://github.com/jantenhove/GoodWeLogger/issues/25) for more information. Confirmed to be working with at least GW3000-NS. 
 
@@ -99,10 +99,10 @@ online | Inverter status (1=on, 0=off) | binary
 When you have your PVOutput *API key* and *System ID* configured correctly in `Settings.h`, production data from the inverter will be uploaded to PVOutput every 5 minutes *(interval is configurable in `Settings.h`, but don't go lower than the minimal interval of every 5 minutes as specified by PVOutput)*.
 When multiple inverters are connected, by daisy-chaining the RS485 cable, be aware that only the production data of the first inverter will be uploaded!
 
-For the PVOutput upload function to work, it is important that the ESP8266 has access to the internet. 
-Apart from connections being made to PVOutput, you will also see that the ESP8266 talks with `pool.ntp.org` every hour. This is done to retrieve the current time, which is needed to post data to PVOutput.
+For the PVOutput upload function to work, it is important that the ESP32 has access to the internet. 
+Apart from connections being made to PVOutput, you will also see that the ESP32 talks with `pool.ntp.org` every hour. This is done to retrieve the current time, which is needed to post data to PVOutput.
 
-If you plan to use only MQTT, internet access for the ESP8266 is not needed.
+If you plan to use only MQTT, internet access for the ESP32 is not needed.
 
 
 ## TODO
